@@ -1,0 +1,12 @@
+private void AutoFontSize(Control control, float FontSize = 7)
+        {
+            using (Graphics cg = this.CreateGraphics())
+            {
+                SizeF size = cg.MeasureString(control.Text, control.Font);
+
+                if(control.Width < (int)size.Width)
+                {
+                    control.Font = new Font(control.Font.FontFamily, FontSize);
+                }
+            }
+        }
