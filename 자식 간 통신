@@ -1,0 +1,53 @@
+//surgeSystempage (자식폼) 전달할려고 하는 데이터를 가지고 있는 폼
+
+ 
+
+//이벤트처리를위한델리게이트정의 
+
+public delegate void MyEventHandler(int TimeSet, string AddressSet, string TokenSet); 
+
+//이벤트 정의       
+
+public event MyEventHandler SettingEvent;     
+
+ 
+
+private void ServerSetBtn_Click(object sender, EventArgs e)
+
+{
+
+  SettingEvent(Time, Address, Token);
+
+}
+
+//MainForm (부모폼) 자식폼 들을 선언후 자식폼의 이벤트 등록
+
+ 
+
+//이벤트가 정의된 Form 선언
+
+private UcSystemSet surgeSystemPage = new UcSystemSet(termtime, Address, Token);
+
+//이벤트로 전달받은 값을 쓰기위한 Form 선언
+
+private UcSurgeStatus surgeStatusPage = new UcSurgeStatus();
+
+//이벤트등록
+
+surgeSystemPage.SettingEvent += new UcSystemSet.MyEventHandler(surgeStatusPage.SetSystemSetting);
+
+//surgeStatusPage (자식폼) 데이터를 전달받을 자식폼
+
+ 
+
+//함수 선언후 전달받은 값 확인
+
+public void SetSystemSetting(int SetTime, string SetAddress, string SetToken)
+        {
+            this.ServerAddress = SetAddress;
+            this.ServerToken = SetToken;
+            this.TermTime = SetTermTime;
+
+            MessageBox.Show(this.ServerAddress + "//" + this.ServerToken + "//" + this.TermTime);
+
+        }
